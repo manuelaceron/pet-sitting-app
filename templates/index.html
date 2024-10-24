@@ -1,0 +1,47 @@
+<!-- 
+ 
+{% raw %}
+Inherit from base template:
+- {{ ... }} expression or variables
+- {% ... %} Statements and control structures, eg. loops, conditionals, template inheritance, it's used to execute logic
+- {{ }} and {% %} are used to embed python expressions into html templates
+
+Use "use_for" for dynamic links
+
+{% endraw %}
+ -->
+
+<!-- Inherit everything from head tag and overrite css files, and We add our own css filename -->
+
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link 
+rel="stylesheet" 
+href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+/>
+
+{% endblock %} 
+{% block content %} 
+
+
+<!-- 
+{% raw %}
+{% block content %} ... {% endblock %} -> allows to override the same section in the base file 
+{% endraw %}
+-->
+
+<center>
+    <h1>Hello  Pet Sitter!</h1>
+    <img 
+    src="{{ url_for('static', filename='images/pet-sitting.jpg') }}"
+    alt="pet sitting"
+    height="200px"
+    />
+
+
+<p>
+    Welcome to your Pet Sitting logger!
+    <br />
+    This website implements basic CRUD functionality using Flask
+</p>
+</center>
+{% endblock %}
