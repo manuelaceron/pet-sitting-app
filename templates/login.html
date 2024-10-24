@@ -32,7 +32,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
       </div>
 
       <div class="form-check">        
-        <input type="checkbox" class="form-check-input" id="remember" />
+        <input type="checkbox" class="form-check-input" id="remember" name="remember" />
         <label class="form-check-label" for="remember">Remember Me</label>
       </div>
 
@@ -41,3 +41,5 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
   </div>
 
 {% endblock %}
+
+<!-- When clicking "Log In" button, the type "sumbit" calls the "/login" route, method POST, correspoding to method "login_post()" -->
