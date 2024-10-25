@@ -21,3 +21,16 @@ def index():
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+
+@mainBp.route('/new')
+@login_required
+def new_working_hours():
+    return render_template('create_working_hours.html')
+
+@mainBp.route('/new', methods=['POST'])
+@login_required
+def new_working_hours_post():
+    return render_template('create_working_hours.html')
+
+

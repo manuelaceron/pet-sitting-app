@@ -88,7 +88,7 @@
         <form class="form-inline my-2 my-lg-0">      
           {% if current_user.is_authenticated %}
           <a
-            href="#"
+            href="{{ url_for('main.new_working_hours') }}"
             class="btn btn-outline-primary"
             role="button"
             >Add working hours</a
