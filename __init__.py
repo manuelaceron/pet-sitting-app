@@ -14,11 +14,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
     # Initialize the database with the app
-    db.init_app(app) 
-
-    with app.app_context():  
-        db.create_all()
-
+    db.init_app(app)
     
     # Register Blueprints into our app instance
     from .main import mainBp as main_blueprint
