@@ -57,12 +57,30 @@ def user_working_hours():
     return render_template('all_hours.html', hours=hours, user=user)
 
 
-@mainBp.route('/update')
+@mainBp.route('/hour/<int:hour_id>/update', methods=['GET', 'POST'])
 @login_required
-def update_working_hours():
-    return render_template('create_working_hours.html')
+def update_working_hours(hour_id):
+    hour = WorkingHours.query.get_or_404(hour_id)
 
-@mainBp.route('/delete')
+    if request.method == 'POST':
+        
+        #TODO: update only the fields that are filled in
+
+        hour.hours = request.form['hours']
+        hour.comment = request.form.get('comment')
+        hour.pet_name = request.form.get('pet_name')
+        hour.date = datetime.strptime(request.form.get('date'), '%Y-%m-%d').date()
+        db.session.commit()
+        flash('Your working hours have been updated!')        
+        return redirect(url_for('main.user_working_hours'))
+
+    return render_template('update_working_hours.html', hour=hour)
+
+@mainBp.route('/hour/<int:hour_id>/delete', methods=['GET', 'POST'])
 @login_required
-def delete_working_hours():
-    return render_template('create_working_hours.html')
+def delete_working_hours(hour_id):
+    hour = WorkingHours.query.get_or_404(hour_id)
+    db.session.delete(hour)
+    db.session.commit()
+
+    return redirect(url_for('main.user_working_hours'))
