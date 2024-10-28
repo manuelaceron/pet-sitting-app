@@ -66,12 +66,16 @@ def update_working_hours(hour_id):
 
     if request.method == 'POST':
         
-        #TODO: update only the fields that are filled in
+        fields = ['hours', 'comment', 'pet_name', 'date']
 
-        hour.hours = request.form['hours']
-        hour.comment = request.form.get('comment')
-        hour.pet_name = request.form.get('pet_name')
-        hour.date = datetime.strptime(request.form.get('date'), '%Y-%m-%d').date()
+        for field in fields:
+            value = request.form.get(field)
+            if value:
+                if field == 'date':
+                    value = datetime.strptime(value, '%Y-%m-%d').date()
+                
+                setattr(hour, field, value)
+        
         db.session.commit()
         flash('Your working hours have been updated!')        
         return redirect(url_for('main.user_working_hours'))
