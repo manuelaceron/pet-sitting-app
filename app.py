@@ -1,4 +1,4 @@
-from pushups_logger import create_app
+from workingHoursLogger import create_app
 
 app = create_app()
 
