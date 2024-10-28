@@ -6,7 +6,8 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 {% endblock %}
 
 {% block content %} 
-<h1>Welcome {{ user.name }}!</h1>
+<center>
+  <h1>Welcome {{ user.name }}!</h1>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <div class="flashes">
@@ -25,7 +26,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
         </tr>
       </thead>
       <tbody>
-        {% for hour in hours %}
+        {% for hour in hours.items %}
         <tr>
           <td>{{ hour.hours }}</td>
           <td>{{ hour.date_posted.strftime('%m/%d/%Y') }}</td>
@@ -53,5 +54,25 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
         {% endfor %}
       </tbody>
     </table>
+    {% for page_num in hours.iter_pages(left_edge=1, right_edge=1, 
+      left_current=1, right_current=1) %}
+      {% if page_num %}
+      {% if hours.page == page_num %}
+      <a
+        class="btn btn-info mb-4"  
+        href="{{ url_for('main.user_working_hours', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% else %}
+      <a
+        class="btn btn-outline-info mb-4"  
+        href="{{ url_for('main.user_working_hours', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% endif %} {% else %} ... {% endif %} {% endfor %}
+
+      
   </div>
+</center>
+
 {% endblock %}

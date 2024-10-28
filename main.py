@@ -53,7 +53,9 @@ def new_working_hours_post():
 @login_required
 def user_working_hours():
     user = User.query.filter_by(email=current_user.email).first_or_404()
-    hours = user.hours
+    #hours = user.hours
+    page = request.args.get('page', 1, type=int)
+    hours = WorkingHours.query.filter_by(author=user).paginate(page = page, per_page=3)
     return render_template('all_hours.html', hours=hours, user=user)
 
 
