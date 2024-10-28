@@ -82,5 +82,6 @@ def delete_working_hours(hour_id):
     hour = WorkingHours.query.get_or_404(hour_id)
     db.session.delete(hour)
     db.session.commit()
+    flash('Your hours has been deleted!')
 
     return redirect(url_for('main.user_working_hours'))

@@ -7,6 +7,12 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 
 {% block content %} 
 <h1>Welcome {{ user.name }}!</h1>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="flashes">
+  {{ messages[0] }}
+</div>
+{% endif %} {% endwith %}
 
 <div>
     <table class="table table-hover" style="width: 700px;">
