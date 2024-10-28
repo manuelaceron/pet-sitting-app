@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     # TODO: Why?
     hours = db.relationship('WorkingHours', backref='author', lazy=True)
+    pets = db.relationship('Pet', backref='owner', lazy=True)
 
 class WorkingHours(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,3 +23,12 @@ class WorkingHours(db.Model):
     pet_name = db.Column(db.String(100), nullable=False)
     comment = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class Pet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    rate = db.Column(db.Integer, nullable=False)
+    sitter = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comment = db.Column(db.Text, nullable=False)
+
+    

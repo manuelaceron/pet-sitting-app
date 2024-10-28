@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block head %} {{ super() }}
+<link 
+rel="stylesheet" 
+href="{{ url_for('static', filename= 'extended_beauty.css') }}"
+/>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-4 col-md-offset-4">
+    <form method="POST" action="/new_pet">
+      <h2>Add my pet</h2>
+      
+      <div class="form-group">
+        <label for="pet_name">Pet Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="pet_name"
+          name="pet_name"
+          aria-describedby="pet_nameHelp"
+          placeholder="Add the pet name"
+        />
+
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <input
+          type="text"
+          class="form-control"
+          id="comment"
+          name="comment"
+          aria-describedby="commentHelp"
+          placeholder="Any comments"
+        />
+      </div>
+      
+      </div>
+      <div class="form-group">
+        <label for="rate">Rate</label>
+        <input
+          type="rate"
+          class="form-control"
+          id="rate"
+          name="rate"
+          aria-describedby="rateHelp"
+          placeholder="Add Rate"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+
+{% endblock %}

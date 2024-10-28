@@ -7,5 +7,27 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 
 {% block content %} 
 <h1>Welcome {{ name }}!</h1>
+
+<div>
+    <table class="table table-hover" style="width: 700px;">
+      <thead class="thead-dark">
+        <tr>        
+          <th scope="col">Pet name</th>
+          <th scope="col">Total hours</th>
+          <th scope="col">Total earned</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pet in hours.items %}
+        <tr>
+          <td>{{ pet.pet_name }}</td>
+          <td>{{ 1 }}</td>                    
+          <td>{{ 1 }}</td>          
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+
 {% endblock %}
 

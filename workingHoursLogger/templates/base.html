@@ -80,12 +80,18 @@
               class="btn btn-outline-secondary"
               role="button"
               style="margin-left: 4px;"
-              >Account</a
+              >All Pets</a
             >
           </li>
         </ul>
         
         <form class="form-inline my-2 my-lg-0">      
+          <a
+          href="{{ url_for('main.new_pet') }}"
+          class="btn btn-outline-primary"
+          role="button"
+          >Add my pets</a
+        >
           {% if current_user.is_authenticated %}
           <a
             href="{{ url_for('main.new_working_hours') }}"
@@ -93,6 +99,8 @@
             role="button"
             >Add working hours</a
           >
+          {% endif %}
+          {% if current_user.is_authenticated %}
           {% endif %}
           {% if not current_user.is_authenticated %}
           <a
