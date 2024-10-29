@@ -36,12 +36,10 @@ def new_pet():
         pet_name = request.form.get('pet_name')    
         comment = request.form.get('comment')
         rate = request.form.get('rate')    
-        print(pet_name, comment)
         # create record in Pet table
         pets = Pet(name=pet_name, comment=comment, rate=rate, owner=current_user )
         db.session.add(pets)
         db.session.commit()
-        print('TO DB')
 
         return redirect(url_for('main.profile'))
 
@@ -50,18 +48,22 @@ def new_pet():
 @mainBp.route('/new')
 @login_required
 def new_working_hours():
-    return render_template('create_working_hours.html')
+    user = User.query.filter_by(email=current_user.email).first_or_404()
+    pet = Pet.query.filter_by(owner=user)
+    return render_template('create_working_hours.html', pets=pet)
 
 @mainBp.route('/new', methods=['POST'])
 @login_required
 def new_working_hours_post():
     hours = request.form.get('hours')    
     comment = request.form.get('comment')
-    pet_name = request.form.get('pet_name')
+    pet_id = request.form.get('pet_id')
     date = datetime.strptime(request.form.get('date'), '%Y-%m-%d').date()
 
+    pet = Pet.query.filter_by(id=pet_id).first_or_404()
+
     # create record in WorkingHours table
-    workingHours = WorkingHours(hours=hours, date_posted=date, pet_name=pet_name, comment=comment, author=current_user )
+    workingHours = WorkingHours(hours=hours, date_posted=date, comment=comment, pet_id=pet.id, user_id=current_user.id)
     db.session.add(workingHours)
     db.session.commit()
 

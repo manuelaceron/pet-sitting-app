@@ -19,16 +19,18 @@ class User(db.Model, UserMixin):
 class WorkingHours(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hours = db.Column(db.Integer, nullable=False)
-    date_posted = db.Column(db.DateTime, nullable= False, default=datetime.utcnow)
-    pet_name = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable= False, default=datetime.utcnow)    
     comment = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    pet_id = db.Column(db.Integer,db.ForeignKey('pet.id'), nullable=False)
 
 class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     rate = db.Column(db.Integer, nullable=False)
-    sitter = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     comment = db.Column(db.Text, nullable=False)
+    sitter = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    hours = db.relationship('WorkingHours', backref='animal', lazy=True)
 
     

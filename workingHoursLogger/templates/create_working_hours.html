@@ -7,9 +7,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 {% block content %}
 <div class="col-md-4 col-md-offset-4">
     <form method="POST" action="/new">
-      <h2>Add new working hours</h2>
-
-
+      <h2>Add new working hours</h2>   
       <div class="form-group">
         <label for="hours">Hours</label>
         <input
@@ -31,18 +29,15 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
           aria-describedby="commentHelp"
           placeholder="Any comments"
         />
-      </div>
-      <div class="form-group">
-        <label for="pet_name">Pet Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="pet_name"
-          name="pet_name"
-          aria-describedby="pet_nameHelp"
-          placeholder="Add the pet name"
-        />
-      </div>
+      </div>      
+      <div class="form-group">        
+        <label for="pet_id">Your Pet</label>
+        <select class="form-select" aria-label="Select" name="pet_id">
+          {% for pet in pets %}
+            <option value="{{ pet.id }}">{{ pet.id }} - {{ pet.name }}</option>
+          {% endfor %}
+        </select>             
+      </div>      
       <div class="form-group">
         <label for="date">Date</label>
         <input
