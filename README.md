@@ -10,4 +10,6 @@ Built with CRUD operations and user authentication, using Flask, SQLite, and HTM
 - User Authentication: Secure access with Flask's built-in authentication.
 - CRUD Operations: Easy management of pets, rates, and logged hours.
 
+![Gif demo](demo.gif)
+
 The app is live and ready to use [here.](https://pet-sitting-app.onrender.com)
