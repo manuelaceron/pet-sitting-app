@@ -2,6 +2,7 @@ from . import db
 from .models import User, WorkingHours, Pet
 from flask import Blueprint, render_template, url_for, request, flash, redirect
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from datetime import datetime
 
 """""
@@ -23,10 +24,14 @@ def index():
 @mainBp.route('/profile')
 @login_required
 def profile():
-    user = User.query.filter_by(email=current_user.email).first_or_404()
-    hours = user.hours
-    #TODO: Query all pets of the user, sum up hours and calculate total earned to pass to HTML
-    return render_template('profile.html', name=current_user.name, hours=hours)
+    page = request.args.get('page', 1, type=int)
+    pets = db.session.query(Pet.name.label('pet_name'), func.sum(WorkingHours.hours).label('hours'), (func.sum(WorkingHours.hours)*Pet.rate).label('earned')).\
+                        join(WorkingHours, Pet.id == WorkingHours.pet_id).\
+                        filter(WorkingHours.user_id==current_user.id).\
+                        group_by(Pet.name).paginate(page = page, per_page=10)
+    
+
+    return render_template('profile.html', name=current_user.name, pets=pets)
 
 @mainBp.route('/new_pet', methods=['GET', 'POST'])
 @login_required
@@ -78,7 +83,8 @@ def user_working_hours():
     user = User.query.filter_by(email=current_user.email).first_or_404()
     #hours = user.hours
     page = request.args.get('page', 1, type=int)
-    hours = WorkingHours.query.filter_by(author=user).paginate(page = page, per_page=3)
+    hours = WorkingHours.query.filter_by(author=user).paginate(page = page, per_page=10)
+
     return render_template('all_hours.html', hours=hours, user=user)
 
 

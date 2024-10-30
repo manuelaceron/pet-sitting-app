@@ -24,6 +24,8 @@ class WorkingHours(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     pet_id = db.Column(db.Integer,db.ForeignKey('pet.id'), nullable=False)
 
+    pet = db.relationship('Pet', backref='working_hours', lazy=True)
+
 class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -31,6 +33,6 @@ class Pet(db.Model):
     comment = db.Column(db.Text, nullable=False)
     sitter = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
-    hours = db.relationship('WorkingHours', backref='animal', lazy=True)
+    
 
     

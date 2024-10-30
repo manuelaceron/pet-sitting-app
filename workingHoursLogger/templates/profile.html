@@ -7,27 +7,45 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 
 {% block content %} 
 <h1>Welcome {{ name }}!</h1>
-
-<div>
-    <table class="table table-hover" style="width: 700px;">
+<center>
+  <div>
+    <table class="table table-hover" style="width: 500px;">
       <thead class="thead-dark">
         <tr>        
-          <th scope="col">Pet name</th>
-          <th scope="col">Total hours</th>
-          <th scope="col">Total earned</th>
+          <th scope="col"><center>Pet</center></th>
+          <th scope="col"><center>Total hours</center></th>
+          <th scope="col"><center>Total earned (€)</center></th>
         </tr>
       </thead>
       <tbody>
-        {% for pet in hours.items %}
+        {% for pet in pets.items %}
         <tr>
           <td>{{ pet.pet_name }}</td>
-          <td>{{ 1 }}</td>                    
-          <td>{{ 1 }}</td>          
+          <td>{{ pet.hours }}</td>                    
+          <td>{{ pet.earned}}</td>          
         </tr>
         {% endfor %}
       </tbody>
     </table>
-</div>
+    {% for page_num in pets.iter_pages(left_edge=1, right_edge=1, 
+      left_current=1, right_current=1) %}
+      {% if page_num %}
+      {% if pets.page == page_num %}
+      <a
+        class="btn btn-info mb-4"  
+        href="{{ url_for('main.profile', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% else %}
+      <a
+        class="btn btn-outline-info mb-4"  
+        href="{{ url_for('main.profile', page=page_num) }}"
+        >{{ page_num }}</a
+      >
+      {% endif %} {% else %} ... {% endif %} {% endfor %}
+  </div>
+
+</center>
 
 {% endblock %}
 
