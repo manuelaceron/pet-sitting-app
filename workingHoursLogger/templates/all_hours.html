@@ -6,7 +6,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 {% endblock %}
 
 {% block content %} 
-<center>
+
   <h1>Welcome {{ user.name }}!</h1>
 {% with messages = get_flashed_messages() %}
 {% if messages %}
@@ -14,28 +14,30 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
   {{ messages[0] }}
 </div>
 {% endif %} {% endwith %}
-
-<div>
+<center>
+  <div>
     <table class="table table-hover" style="width: 700px;">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">Number of worked hours</th>
-          <th scope="col">Performed At</th>
-          <th scope="col">Pet name</th>
-          <th scope="col">Comments</th>
+          <th scope="col"> <center>Worked hours</center></th>
+          <th scope="col"> <center>Pet name</center></th>
+          <th scope="col"> <center>Date</center></th>          
+          <th scope="col"> <center>Comments</center></th>
+          <th scope="col"> <center></center></th>
+          <th scope="col"> <center></center></th>
         </tr>
       </thead>
       <tbody>
         {% for hour in hours.items %}
         <tr>
           <td>{{ hour.hours }}</td>
-          <td>{{ hour.date_posted.strftime('%m/%d/%Y') }}</td>
-          <td>{{ hour.pet_name }}</td>
+          <td>{{ hour.pet.name }}</td>
+          <td>{{ hour.date_posted.strftime('%m/%d/%Y') }}</td>          
           <td>{{ hour.comment }}</td>
           <td>
             <a
               href="{{ url_for('main.update_working_hours', hour_id=hour.id) }}"
-              class="btn btn-outline-primary"
+              class="btn btn-outline-primary btn-sm"
               role="button"
             >
               Edit
@@ -44,7 +46,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
           <td>
             <a
               href="{{ url_for('main.delete_working_hours', hour_id=hour.id) }}"
-              class="btn btn-outline-danger"
+              class="btn btn-outline-danger btn-sm"
               role="button"
             >
               Delete
@@ -73,6 +75,7 @@ href="{{ url_for('static', filename= 'extended_beauty.css') }}"
 
       
   </div>
+
 </center>
 
 {% endblock %}
