@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from celery import Celery, Task
@@ -7,6 +8,7 @@ from .config import Config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+mail = Mail() 
 
 # Create flask instance
 def create_app() -> Flask:
@@ -40,6 +42,14 @@ def create_app() -> Flask:
     with app.app_context():
         db.create_all()
     
+    app.config['MAIL_SERVER'] = Config.MAIL_SERVER
+    app.config['MAIL_PORT'] = Config.MAIL_PORT
+    app.config['MAIL_USERNAME'] = Config.MAIL_USERNAME
+    app.config['MAIL_PASSWORD'] = Config.MAIL_PASSWORD
+    app.config['MAIL_USE_TLS'] = Config.MAIL_USE_TLS
+    app.config['MAIL_USE_SSL'] = Config.MAIL_USE_SSL     
+
+    mail.init_app(app)          
 
     from .models import User
     @login_manager.user_loader

@@ -45,13 +45,13 @@ def new_pet():
         # create record in Pet table
         pets = Pet(name=pet_name, comment=comment, rate=rate, owner=current_user )
         db.session.add(pets)
-        db.session.commit()
-
+        db.session.commit()    
 
         # Call Celery task
-        result = longtime_add.delay()
+        subject = 'Pet-Sitter: Update'
+        body = "You have registered {0}!".format(pet_name)
+        result = longtime_add.delay(subject, body)
         current_app.logger.info(f'Celery Task ID: {result.id}')
-
 
         return redirect(url_for('main.profile'))
 
@@ -80,6 +80,12 @@ def new_working_hours_post():
     db.session.commit()
 
     flash('Your hours has been added!')
+    
+    # Call Celery task
+    subject = 'Pet-Sitter: Update'
+    body = "You have registered {0} hours for {1}!".format(hours, pet.name)
+    result = longtime_add.delay(subject, body)
+    current_app.logger.info(f'Celery Task ID: {result.id}')
 
     return redirect(url_for('main.user_working_hours'))
 
