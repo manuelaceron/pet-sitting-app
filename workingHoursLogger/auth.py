@@ -16,9 +16,7 @@ def signup_post():
     # get the info captured from the html form to server..
     email = request.form.get('email')
     name = request.form.get('name')
-    password = request.form.get('password')
-
-    # TODO: send to database
+    password = request.form.get('password')    
 
     # Query user table to get the first row matching email
     user = User.query.filter_by(email=email).first()

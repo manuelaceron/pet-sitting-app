@@ -39,9 +39,6 @@ def create_app() -> Flask:
     - login_view specifies the page to which unauthenticated users are redirected.
     - init_app(app) integrates the login manager with the Flask application instance. """
     
-    with app.app_context():
-        db.create_all()
-    
     app.config['MAIL_SERVER'] = Config.MAIL_SERVER
     app.config['MAIL_PORT'] = Config.MAIL_PORT
     app.config['MAIL_USERNAME'] = Config.MAIL_USERNAME

@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, url_for, request, flash, redirect,
 from flask_login import login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
-from .tasks import longtime_add
+from .tasks import send_notification
 
 """""
 Blueprint: way to organize files in flask project
@@ -50,7 +50,7 @@ def new_pet():
         # Call Celery task
         subject = 'Pet-Sitter: Update'
         body = "You have registered {0}!".format(pet_name)
-        result = longtime_add.delay(subject, body)
+        result = send_notification.delay(subject, body)
         current_app.logger.info(f'Celery Task ID: {result.id}')
 
         return redirect(url_for('main.profile'))
@@ -84,7 +84,7 @@ def new_working_hours_post():
     # Call Celery task
     subject = 'Pet-Sitter: Update'
     body = "You have registered {0} hours for {1}!".format(hours, pet.name)
-    result = longtime_add.delay(subject, body)
+    result = send_notification.delay(subject, body)
     current_app.logger.info(f'Celery Task ID: {result.id}')
 
     return redirect(url_for('main.user_working_hours'))
