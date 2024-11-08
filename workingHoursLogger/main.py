@@ -1,9 +1,10 @@
-from . import db
+from .app import db
 from .models import User, WorkingHours, Pet
-from flask import Blueprint, render_template, url_for, request, flash, redirect
+from flask import Blueprint, render_template, url_for, request, flash, redirect, current_app
 from flask_login import login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
+from .tasks import longtime_add
 
 """""
 Blueprint: way to organize files in flask project
@@ -45,6 +46,12 @@ def new_pet():
         pets = Pet(name=pet_name, comment=comment, rate=rate, owner=current_user )
         db.session.add(pets)
         db.session.commit()
+
+
+        # Call Celery task
+        result = longtime_add.delay()
+        current_app.logger.info(f'Celery Task ID: {result.id}')
+
 
         return redirect(url_for('main.profile'))
 
