@@ -1,4 +1,4 @@
-from workingHoursLogger import create_app
+from workingHoursLogger.app import create_app
 
 app = create_app()
 
